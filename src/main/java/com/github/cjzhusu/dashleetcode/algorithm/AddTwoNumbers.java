@@ -12,6 +12,54 @@ package com.github.cjzhusu.dashleetcode.algorithm;
  * Explanation: 342 + 465 = 807.
  */
 public class AddTwoNumbers {
+    public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+        ListNode extra = new ListNode(0);
+        ListNode head = extra;
+        int residue = 0;
+        while (null != l1 || null != l2) {
+            int x = null != l1 ? l1.val : 0;
+            int y = null != l2 ? l2.val : 0;
+            int sum = residue + x + y;
+            residue = sum / 10;
+            extra.next = new ListNode(sum % 10);
+            extra = extra.next;
+            if (null != l1) {
+                l1 = l1.next;
+            }
 
-    // todo
+            if (null != l2) {
+                l2 = l2.next;
+            }
+        }
+
+        if (residue > 0) {
+            extra.next = new ListNode(residue);
+        }
+
+        return head.next;
+    }
+
+    static class ListNode {
+        int val;
+        ListNode next;
+
+        ListNode(int x) {
+            val = x;
+        }
+    }
+
+    public static void main(String[] args) {
+        ListNode l1 = new ListNode(2);
+        l1.next = new ListNode(4);
+        l1.next.next = new ListNode(3);
+        ListNode l2 = new ListNode(5);
+        l2.next = new ListNode(6);
+        l2.next.next = new ListNode(4);
+        ListNode res = new AddTwoNumbers().addTwoNumbers(l1, l2);
+        System.out.println(res.val);
+        while (null != res.next) {
+            System.out.println(res.next.val);
+            res = res.next;
+        }
+    }
 }
